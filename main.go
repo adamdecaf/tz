@@ -22,13 +22,13 @@ func main() {
 
 	input := strings.Join(flag.Args(), " ")
 	if input == "" {
-		fmt.Println("No input provided")
+		fmt.Println("No input provided") //nolint:forbidigo
 		os.Exit(1)
 	}
 
 	in, format, err := parse(input)
 	if err != nil {
-		fmt.Printf("ERROR %s\n", err)
+		fmt.Printf("ERROR %s\n", err) //nolint:forbidigo
 		os.Exit(1)
 	}
 	if *flagFormat != "" {
@@ -53,7 +53,7 @@ func main() {
 		for i := range tzs {
 			loc, err := time.LoadLocation(tzs[i])
 			if err != nil {
-				fmt.Printf("ERROR parsing -to=%s failed: %v\n", tzs[i], err)
+				fmt.Printf("ERROR parsing -to=%s failed: %v\n", tzs[i], err) //nolint:forbidigo
 				os.Exit(1)
 			}
 			to := fmt.Sprintf("%s\t%s", loc.String(), in.In(loc).Format(format))
@@ -65,6 +65,6 @@ func main() {
 	lines = slices.Compact(lines)
 
 	for i := range lines {
-		fmt.Fprintln(w, lines[i])
+		fmt.Fprintln(w, lines[i]) //nolint:forbidigo
 	}
 }
