@@ -62,6 +62,7 @@ func main() {
 	}
 
 	slices.Sort(lines)
+	lines = slices.Compact(lines)
 
 	for i := range lines {
 		fmt.Fprintln(w, lines[i])
