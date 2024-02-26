@@ -40,12 +40,19 @@ func main() {
 	out := in.In(now.Location()).Format(format)
 	tz := now.Location().String()
 
+	diff := now.Sub(in.In(now.Location())).Truncate(time.Second)
+
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 	defer w.Flush()
 
 	lines := []string{
 		fmt.Sprintf("UTC\t%s", utc),
-		fmt.Sprintf("%s\t%s", tz, out),
+	}
+	if diff > 0*time.Second {
+		lines = append(lines, fmt.Sprintf("%s\t%s (%s ago)", tz, out, diff))
+	} else {
+		diff = (diff * -1 * time.Second).Truncate(time.Second)
+		lines = append(lines, fmt.Sprintf("%s\t%s (%s from now)", tz, out, diff))
 	}
 
 	if *flagTo != "" {
