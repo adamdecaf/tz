@@ -22,3 +22,4 @@ go.work
 
 /lint-project.sh
 /tz
+/bin/
