@@ -8,6 +8,8 @@ import (
 	"strings"
 	"text/tabwriter"
 	"time"
+
+	"github.com/adamdecaf/tz/pkg/parse"
 )
 
 var (
@@ -26,7 +28,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	in, format, err := parse(input)
+	in, format, err := parse.Time(input)
 	if err != nil {
 		fmt.Printf("ERROR %s\n", err) //nolint:forbidigo
 		os.Exit(1)

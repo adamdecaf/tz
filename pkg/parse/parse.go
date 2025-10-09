@@ -1,4 +1,4 @@
-package main
+package parse
 
 import (
 	"fmt"
@@ -6,6 +6,19 @@ import (
 )
 
 // TODO(adam): need // 2024-02-12 15:31 UTC‑06:00 with fancy hyphen?
+
+// Time returns a time.Time and the format that was found to match.
+// Otherwise an error is returned if no format matches.
+func Time(input string) (time.Time, string, error) {
+	for i := range formats {
+		ts, err := time.Parse(formats[i], input)
+		if err != nil {
+			continue
+		}
+		return ts, formats[i], nil
+	}
+	return time.Time{}, "", fmt.Errorf("unsupported format %s", input)
+}
 
 var (
 	// formats is a list of various date and time formats found in the wild
@@ -89,6 +102,7 @@ var (
 		"6/1/2 15:04",
 		"Jan 02 2006 03:04:05PM",
 		"Jan 02, 2006",
+		"Jan 2, 2006 15:04 MST",
 		"Jan 2, 2006 15:04:05 MST",
 		"Jan 2, 2006 3:04:05 PM MST",
 		"Jan 2, 2006 3:04:05 PM",
@@ -196,14 +210,3 @@ var (
 		time.UnixDate,
 	}
 )
-
-func parse(input string) (time.Time, string, error) {
-	for i := range formats {
-		ts, err := time.Parse(formats[i], input)
-		if err != nil {
-			continue
-		}
-		return ts, formats[i], nil
-	}
-	return time.Time{}, "", fmt.Errorf("unsupported format %s", input)
-}
