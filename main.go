@@ -17,6 +17,24 @@ var (
 	flagFormat = flag.String("format", "", "Format used to display output")
 )
 
+func init() {
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage: %s [options] <input>\n\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "Options:\n")
+		flag.PrintDefaults()
+		fmt.Fprintf(os.Stderr, "\nFormat aliases:\n")
+		fmt.Fprintf(os.Stderr, "  rfc3339, iso, iso8601 -> RFC3339\n")
+		fmt.Fprintf(os.Stderr, "  ansic -> ANSIC\n")
+		fmt.Fprintf(os.Stderr, "  rfc822, rfc822z -> RFC822 variants\n")
+		fmt.Fprintf(os.Stderr, "  rfc1123, rfc1123z -> RFC1123 variants\n")
+		fmt.Fprintf(os.Stderr, "  rfc3339nano -> RFC3339Nano\n")
+		fmt.Fprintf(os.Stderr, "  kitchen -> Kitchen\n")
+		fmt.Fprintf(os.Stderr, "  stamp, stampmilli, stampmicro, stampnano -> Stamp variants\n")
+		fmt.Fprintf(os.Stderr, "  unixdate -> UnixDate\n")
+		fmt.Fprintf(os.Stderr, "  rubydate -> RubyDate\n")
+	}
+}
+
 // tz accepts a date/timestamp as input and outputs the time in the user's
 // local timezone and UTC.
 func main() {
@@ -35,6 +53,37 @@ func main() {
 	}
 	if *flagFormat != "" {
 		format = *flagFormat
+	}
+	// check format against known aliases
+	switch strings.ToLower(format) {
+	case "rfc3339", "iso", "iso8601":
+		format = time.RFC3339
+	case "ansic":
+		format = time.ANSIC
+	case "rfc822":
+		format = time.RFC822
+	case "rfc822z":
+		format = time.RFC822Z
+	case "rfc1123":
+		format = time.RFC1123
+	case "rfc1123z":
+		format = time.RFC1123Z
+	case "rfc3339nano":
+		format = time.RFC3339Nano
+	case "kitchen":
+		format = time.Kitchen
+	case "stamp":
+		format = time.Stamp
+	case "stampmilli":
+		format = time.StampMilli
+	case "stampmicro":
+		format = time.StampMicro
+	case "stampnano":
+		format = time.StampNano
+	case "unixdate":
+		format = time.UnixDate
+	case "rubydate":
+		format = time.RubyDate
 	}
 
 	now := time.Now()

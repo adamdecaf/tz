@@ -30,6 +30,10 @@ America/New_York  Tue Feb 13 12:26:21 EST 2024
 UTC               Tue Feb 13 17:26:21 UTC 2024
 ```
 
+## Formats
+
+You can specify output formats using the `-format` flag. Common aliases include `rfc3339`, `iso`, and `iso8601` for RFC3339 format. See `-help` for a full list of supported format aliases.
+
 ## Supported and tested platforms
 
 - 64-bit Linux (Ubuntu, Debian), macOS, and Windows
