@@ -20,6 +20,14 @@ America/Chicago  Tue Feb 13 13:09:57 CST 2024
 UTC              Tue Feb 13 19:09:57 UTC 2024
 ```
 
+You can also pass `now` instead of a timestamp:
+
+```
+$ tz now
+America/Chicago  Tue Feb 13 13:09:57 CST 2024
+UTC              Tue Feb 13 19:09:57 UTC 2024
+```
+
 tz reads the `TZ=America/Chicago` environmental variable too and supports multiple output timezones.
 
 ```

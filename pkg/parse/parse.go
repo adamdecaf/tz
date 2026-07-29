@@ -2,6 +2,7 @@ package parse
 
 import (
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -9,7 +10,11 @@ import (
 
 // Time returns a time.Time and the format that was found to match.
 // Otherwise an error is returned if no format matches.
+// The special value "now" (case-insensitive) returns the current time.
 func Time(input string) (time.Time, string, error) {
+	if strings.EqualFold(strings.TrimSpace(input), "now") {
+		return time.Now(), time.UnixDate, nil
+	}
 	for i := range formats {
 		ts, err := time.Parse(formats[i], input)
 		if err != nil {

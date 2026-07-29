@@ -32,3 +32,17 @@ func TestParseTime(t *testing.T) {
 		})
 	}
 }
+
+func TestParseTimeNow(t *testing.T) {
+	for _, input := range []string{"now", "Now", "NOW", " now "} {
+		t.Run(input, func(t *testing.T) {
+			before := time.Now()
+			got, format, err := parse.Time(input)
+			after := time.Now()
+			require.NoError(t, err)
+			require.Equal(t, time.UnixDate, format)
+			require.False(t, got.Before(before))
+			require.False(t, got.After(after))
+		})
+	}
+}
